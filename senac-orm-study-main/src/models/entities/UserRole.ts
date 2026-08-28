@@ -20,10 +20,10 @@ import {
  */
 @Entity("user_roles")
 export class UserRole {
-  @PrimaryColumn({ name: "user_id", type: "char", length: 36 })
+  @PrimaryColumn({ name: "user_id", type: "uuid" })
   userId!: string;
 
-  @PrimaryColumn({ name: "role_id", type: "char", length: 36 })
+  @PrimaryColumn({ name: "role_id", type: "uuid" })
   roleId!: string;
 
   @CreateDateColumn({ name: "granted_at" })

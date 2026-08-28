@@ -23,24 +23,19 @@ export class RbacAuditLog {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ name: "user_id", type: "char", length: 36, nullable: true })
+  @Column({ name: "user_id", type: "uuid", nullable: true })
   userId?: string | null;
 
   @Column({ name: "action_type", type: "varchar", length: 50 })
   actionType!: string;
 
-  @Column({ name: "target_user_id", type: "char", length: 36, nullable: true })
+  @Column({ name: "target_user_id", type: "uuid", nullable: true })
   targetUserId?: string | null;
 
-  @Column({ name: "target_role_id", type: "char", length: 36, nullable: true })
+  @Column({ name: "target_role_id", type: "uuid", nullable: true })
   targetRoleId?: string | null;
 
-  @Column({
-    name: "target_permission_id",
-    type: "char",
-    length: 36,
-    nullable: true,
-  })
+  @Column({ name: "target_permission_id", type: "uuid", nullable: true})
   targetPermissionId?: string | null;
 
   @Column({ name: "ip_address", type: "varchar", length: 45, nullable: true })

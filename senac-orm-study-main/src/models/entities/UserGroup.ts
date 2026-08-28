@@ -20,10 +20,10 @@ import {
  */
 @Entity("user_groups")
 export class UserGroup {
-  @PrimaryColumn({ name: "user_id", type: "char", length: 36 })
+  @PrimaryColumn({ name: "user_id", type: "uuid" })
   userId!: string;
 
-  @PrimaryColumn({ name: "group_id", type: "char", length: 36 })
+  @PrimaryColumn({ name: "group_id", type: "uuid" })
   groupId!: string;
 
   @CreateDateColumn({ name: "joined_at" })
