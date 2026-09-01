@@ -3,8 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
+import { RolePermission } from "./RolePermission";
+import { RbacAuditLog } from "./RbacAuditLog";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -35,5 +37,11 @@ export class Permission {
   description?: string;
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt?: Date;
+  createdAt!: Date;
+
+  @OneToMany(() => RolePermission, (rolePermission) => rolePermission.permission)
+  rolePermissions!: RolePermission[];
+
+  @OneToMany(() => RbacAuditLog, (log) => log.targetPermission)
+  auditLogs!: RbacAuditLog[];
 }

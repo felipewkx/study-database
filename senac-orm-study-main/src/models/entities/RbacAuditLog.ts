@@ -6,6 +6,9 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
+import { User } from "./User";
+import { Permission } from "./Permission";
+import { Role } from "./Role";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -35,12 +38,40 @@ export class RbacAuditLog {
   @Column({ name: "target_role_id", type: "uuid", nullable: true })
   targetRoleId?: string | null;
 
-  @Column({ name: "target_permission_id", type: "uuid", nullable: true})
+  @Column({ name: "target_permission_id", type: "uuid", nullable: true })
   targetPermissionId?: string | null;
 
   @Column({ name: "ip_address", type: "varchar", length: 45, nullable: true })
   ipAddress?: string | null;
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt?: Date;
+  createdAt!: Date;
+
+  @ManyToOne(() => User, (user) => user.auditLogs, {
+    onDelete: "SET NULL",
+    nullable: true,
+  })
+  @JoinColumn({ name: "user_id" })
+  user!: User | null;
+
+  @ManyToOne(() => User, (user) => user.targetAuditLogs, {
+    onDelete: "SET NULL",
+    nullable: true,
+  })
+  @JoinColumn({ name: "target_user_id" })
+  targetUser!: User | null;
+
+  @ManyToOne(() => Role, (role) => role.auditLogs, {
+    onDelete: "SET NULL",
+    nullable: true,
+  })
+  @JoinColumn({ name: "target_role_id" })
+  targetRole!: Role | null;
+
+  @ManyToOne(() => Permission, (permission) => permission.auditLogs, {
+    onDelete: "SET NULL",
+    nullable: true,
+  })
+  @JoinColumn({ name: "target_permission_id" })
+  targetPermission!: Permission | null;
 }

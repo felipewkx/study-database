@@ -6,6 +6,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
+import { User } from "./User";
+import { Role } from "./Role";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -20,15 +22,30 @@ import {
  */
 @Entity("user_roles")
 export class UserRole {
-  @PrimaryColumn({ name: "user_id", type: "uuid" })
+  @PrimaryColumn({ type: "uuid", name: "user_id" })
   userId!: string;
 
-  @PrimaryColumn({ name: "role_id", type: "uuid" })
+  @PrimaryColumn({ type: "uuid", name: "role_id" })
   roleId!: string;
 
   @CreateDateColumn({ name: "granted_at" })
-  grantedAt?: Date;
+  grantedAt!: Date;
 
-  @Column({ name: "granted_by", type: "char", length: 36, nullable: true })
-  grantedBy?: string;
+  @Column({ type: "uuid", name: "granted_by", nullable: true })
+  grantedBy!: string | null;
+
+  @ManyToOne(() => User, (user) => user.userRoles, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "user_id" })
+  user!: User;
+
+  @ManyToOne(() => Role, (role) => role.userRoles, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "role_id" })
+  role!: Role;
+
+  @ManyToOne(() => User, (user) => user.userRolesGranted, {
+    onDelete: "SET NULL",
+    nullable: true,
+  })
+  @JoinColumn({ name: "granted_by" })
+  grantedByUser!: User | null;
 }

@@ -1,11 +1,12 @@
 import {
   Entity,
   PrimaryColumn,
-  Column,
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
 } from "typeorm";
+import { Group } from "./Group";
+import { Role } from "./Role";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -27,5 +28,13 @@ export class GroupRole {
   roleId!: string;
 
   @CreateDateColumn({ name: "granted_at" })
-  grantedAt?: Date;
+  grantedAt!: Date;
+
+  @ManyToOne(() => Group, (group) => group.groupRoles, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "group_id" })
+  group!: Group;
+
+  @ManyToOne(() => Role, (role) => role.groupRoles, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "role_id" })
+  role!: Role;
 }

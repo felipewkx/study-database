@@ -1,11 +1,12 @@
 import {
   Entity,
   PrimaryColumn,
-  Column,
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
 } from "typeorm";
+import { Permission } from "./Permission";
+import { Role } from "./Role";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -27,5 +28,17 @@ export class RolePermission {
   permissionId!: string;
 
   @CreateDateColumn({ name: "granted_at" })
-  grantedAt?: Date;
+  grantedAt!: Date;
+
+  @ManyToOne(() => Role, (role) => role.rolePermissions, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "role_id" })
+  role!: Role;
+
+  @ManyToOne(() => Permission, (permission) => permission.rolePermissions, {
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "permission_id" })
+  permission!: Permission;
 }

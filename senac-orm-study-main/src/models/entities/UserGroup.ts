@@ -1,11 +1,12 @@
 import {
   Entity,
   PrimaryColumn,
-  Column,
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
 } from "typeorm";
+import { User } from "./User";
+import { Group } from "./Group";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -27,5 +28,13 @@ export class UserGroup {
   groupId!: string;
 
   @CreateDateColumn({ name: "joined_at" })
-  joinedAt?: Date;
+  joinedAt!: Date;
+
+  @ManyToOne(() => User, (user) => user.userGroups, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "user_id" })
+  user!: User;
+
+  @ManyToOne(() => Group, (group) => group.userGroups, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "group_id" })
+  group!: Group;
 }

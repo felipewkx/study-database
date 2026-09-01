@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../config/database";
-import { Usuario } from "../models/entities/User";
+import { User } from "../models/entities/User";
 import { BaseController } from "./BaseController";
 
 /**
- * Controller de exemplo para a entidade Usuario.
+ * Controller para a entidade User.
  * Demonstra o CRUD básico usando o repositório do TypeORM.
  */
 export class UsuarioController extends BaseController {
   private get repository() {
-    return AppDataSource.getRepository(Usuario);
+    return AppDataSource.getRepository(User);
   }
 
   listar = this.handle(async (_req: Request, res: Response) => {
@@ -20,9 +20,9 @@ export class UsuarioController extends BaseController {
   });
 
   buscarPorId = this.handle(async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+    const id = String(req.params.id);
 
-    if (Number.isNaN(id)) {
+    if (!id) {
       this.badRequest(res, "ID inválido");
       return;
     }
@@ -38,17 +38,18 @@ export class UsuarioController extends BaseController {
   });
 
   criar = this.handle(async (req: Request, res: Response) => {
-    const { nome, email, ativo } = req.body;
+    const { username, email, passwordHash, isActive } = req.body;
 
-    if (!nome || !email) {
-      this.badRequest(res, "Campos obrigatórios: nome, email");
+    if (!username || !email || !passwordHash) {
+      this.badRequest(res, "Campos obrigatórios: username, email, passwordHash");
       return;
     }
 
     const usuario = this.repository.create({
-      nome,
+      username,
       email,
-      ativo: ativo ?? true,
+      passwordHash,
+      isActive: isActive ?? true,
     });
 
     const salvo = await this.repository.save(usuario);
@@ -56,9 +57,9 @@ export class UsuarioController extends BaseController {
   });
 
   atualizar = this.handle(async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+    const id = String(req.params.id);
 
-    if (Number.isNaN(id)) {
+    if (!id) {
       this.badRequest(res, "ID inválido");
       return;
     }
@@ -70,20 +71,22 @@ export class UsuarioController extends BaseController {
       return;
     }
 
-    const { nome, email, ativo } = req.body;
+    const { username, email, passwordHash, isActive, lastLogin } = req.body;
 
-    if (nome !== undefined) usuario.nome = nome;
+    if (username !== undefined) usuario.username = username;
     if (email !== undefined) usuario.email = email;
-    if (ativo !== undefined) usuario.ativo = ativo;
+    if (passwordHash !== undefined) usuario.passwordHash = passwordHash;
+    if (isActive !== undefined) usuario.isActive = isActive;
+    if (lastLogin !== undefined) usuario.lastLogin = lastLogin;
 
     const atualizado = await this.repository.save(usuario);
     this.ok(res, atualizado);
   });
 
   remover = this.handle(async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+    const id = String(req.params.id);
 
-    if (Number.isNaN(id)) {
+    if (!id) {
       this.badRequest(res, "ID inválido");
       return;
     }

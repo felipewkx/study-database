@@ -2,9 +2,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
+  OneToMany,
   UpdateDateColumn,
+  CreateDateColumn,
 } from "typeorm";
+import { UserRole } from "./UserRole";
+import { GroupRole } from "./GroupRole";
+import { RolePermission } from "./RolePermission";
+import { RbacAuditLog } from "./RbacAuditLog";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -25,15 +30,27 @@ export class Role {
   @Column({ type: "varchar", length: 50, unique: true })
   name!: string;
 
-  @Column({ type: "text", unique: true, nullable: true })
-  description?: string;
+  @Column({ type: "text", nullable: true })
+  description!: string | null;
 
   @Column({ type: "boolean", name: "is_system", default: false })
-  isSystem?: boolean;
+  isSystem!: boolean;
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt?: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ name: "updated_at" })
-  updatedAt?: Date;
+  updatedAt!: Date;
+
+  @OneToMany(() => GroupRole, (groupRole) => groupRole.role)
+  groupRoles!: GroupRole[];
+
+  @OneToMany(() => UserRole, (userRole) => userRole.role)
+  userRoles!: UserRole[];
+
+  @OneToMany(() => RolePermission, (rolePermission) => rolePermission.role)
+  rolePermissions!: RolePermission[];
+
+  @OneToMany(() => RbacAuditLog, (log) => log.targetRole)
+  auditLogs!: RbacAuditLog[];
 }
