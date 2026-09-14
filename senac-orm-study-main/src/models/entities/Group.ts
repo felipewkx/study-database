@@ -29,7 +29,7 @@ export class Group {
   name!: string;
 
   @Column({ type: "text", nullable: true })
-  description?: string;
+  description!: string | null;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;

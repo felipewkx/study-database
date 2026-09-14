@@ -27,22 +27,22 @@ export class RbacAuditLog {
   id!: string;
 
   @Column({ name: "user_id", type: "uuid", nullable: true })
-  userId?: string | null;
+  userId!: string | null;
 
   @Column({ name: "action_type", type: "varchar", length: 50 })
   actionType!: string;
 
   @Column({ name: "target_user_id", type: "uuid", nullable: true })
-  targetUserId?: string | null;
+  targetUserId!: string | null;
 
   @Column({ name: "target_role_id", type: "uuid", nullable: true })
-  targetRoleId?: string | null;
+  targetRoleId!: string | null;
 
   @Column({ name: "target_permission_id", type: "uuid", nullable: true })
-  targetPermissionId?: string | null;
+  targetPermissionId!: string | null;
 
   @Column({ name: "ip_address", type: "varchar", length: 45, nullable: true })
-  ipAddress?: string | null;
+  ipAddress!: string | null;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
@@ -61,14 +61,14 @@ export class RbacAuditLog {
   @JoinColumn({ name: "target_user_id" })
   targetUser!: User | null;
 
-  @ManyToOne(() => Role, (role) => role.auditLogs, {
+  @ManyToOne(() => Role, {
     onDelete: "SET NULL",
     nullable: true,
   })
   @JoinColumn({ name: "target_role_id" })
   targetRole!: Role | null;
 
-  @ManyToOne(() => Permission, (permission) => permission.auditLogs, {
+  @ManyToOne(() => Permission, {
     onDelete: "SET NULL",
     nullable: true,
   })

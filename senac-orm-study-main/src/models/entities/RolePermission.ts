@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  Index,
 } from "typeorm";
 import { Permission } from "./Permission";
 import { Role } from "./Role";
@@ -20,6 +21,7 @@ import { Role } from "./Role";
  * Documentação TypeORM: https://typeorm.io/entities
  */
 @Entity("role_permissions")
+@Index("idx_role_permissions_role_id", ["roleId"])
 export class RolePermission {
   @PrimaryColumn({ name: "role_id", type: "uuid" })
   roleId!: string;

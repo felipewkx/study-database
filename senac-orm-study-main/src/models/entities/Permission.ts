@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   OneToMany,
+  Index,
 } from "typeorm";
 import { RolePermission } from "./RolePermission";
 import { RbacAuditLog } from "./RbacAuditLog";
@@ -20,6 +21,7 @@ import { RbacAuditLog } from "./RbacAuditLog";
  * Documentação TypeORM: https://typeorm.io/entities
  */
 @Entity("permissions")
+@Index("idx_permissions_resource_action", ["resource", "action"])
 export class Permission {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -34,12 +36,15 @@ export class Permission {
   action!: string;
 
   @Column({ type: "text", nullable: true })
-  description?: string;
+  description!: string | null;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt!: Date;
 
-  @OneToMany(() => RolePermission, (rolePermission) => rolePermission.permission)
+  @OneToMany(
+    () => RolePermission,
+    (rolePermission) => rolePermission.permission,
+  )
   rolePermissions!: RolePermission[];
 
   @OneToMany(() => RbacAuditLog, (log) => log.targetPermission)

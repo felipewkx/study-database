@@ -9,7 +9,6 @@ import {
 import { UserRole } from "./UserRole";
 import { GroupRole } from "./GroupRole";
 import { RolePermission } from "./RolePermission";
-import { RbacAuditLog } from "./RbacAuditLog";
 
 /**
  * Entidade = mapeamento de uma tabela do banco de dados.
@@ -50,7 +49,4 @@ export class Role {
 
   @OneToMany(() => RolePermission, (rolePermission) => rolePermission.role)
   rolePermissions!: RolePermission[];
-
-  @OneToMany(() => RbacAuditLog, (log) => log.targetRole)
-  auditLogs!: RbacAuditLog[];
 }

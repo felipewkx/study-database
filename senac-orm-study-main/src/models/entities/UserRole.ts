@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  Index,
 } from "typeorm";
 import { User } from "./User";
 import { Role } from "./Role";
@@ -21,6 +22,7 @@ import { Role } from "./Role";
  * Documentação TypeORM: https://typeorm.io/entities
  */
 @Entity("user_roles")
+@Index("idx_user_roles_user_id", ["userId"])
 export class UserRole {
   @PrimaryColumn({ type: "uuid", name: "user_id" })
   userId!: string;
@@ -42,7 +44,7 @@ export class UserRole {
   @JoinColumn({ name: "role_id" })
   role!: Role;
 
-  @ManyToOne(() => User, (user) => user.userRolesGranted, {
+  @ManyToOne(() => User, {
     onDelete: "SET NULL",
     nullable: true,
   })

@@ -53,12 +53,12 @@ export class User {
   @OneToMany(() => UserRole, (userRole) => userRole.user)
   userRoles!: UserRole[];
 
-  @OneToMany(() => UserRole, (userRole) => userRole.grantedByUser)
-  userRolesGranted!: UserRole[];
-
   @OneToMany(() => RbacAuditLog, (log) => log.user)
   auditLogs!: RbacAuditLog[];
 
   @OneToMany(() => RbacAuditLog, (log) => log.targetUser)
   targetAuditLogs!: RbacAuditLog[];
+
+  @OneToMany(() => UserRole, (userRole) => userRole.grantedByUser)
+  userRolesGranted!: UserRole[];
 }

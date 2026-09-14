@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   ManyToOne,
   JoinColumn,
+  Index,
 } from "typeorm";
 import { User } from "./User";
 import { Group } from "./Group";
@@ -20,6 +21,7 @@ import { Group } from "./Group";
  * Documentação TypeORM: https://typeorm.io/entities
  */
 @Entity("user_groups")
+@Index("idx_user_groups_user_id", ["userId"])
 export class UserGroup {
   @PrimaryColumn({ name: "user_id", type: "uuid" })
   userId!: string;
