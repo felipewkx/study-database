@@ -1,5 +1,5 @@
 import { Router } from "express";
-import usuarioRoutes from "./usuario.routes";
+import userRoutes from "./user.routes";
 
 const routes = Router();
 
@@ -13,6 +13,6 @@ routes.get("/health", (_req, res) => {
   });
 });
 
-routes.use("/usuarios", usuarioRoutes);
+routes.use("/users", userRoutes);
 
 export default routes;
