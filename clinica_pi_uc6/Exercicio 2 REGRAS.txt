@@ -1,0 +1,39 @@
+1. Regra de Agendamento Prévio (Datas e Horários)
+
+Regra de negócio: Não dá para agendar uma consulta com uma data de marcação que seja depois do dia da própria consulta. Todo agendamento precisa acontecer antes ou no mesmo momento do atendimento.
+
+Tabela e Campo: Tabela consulta, campos data_agendamento e data_hora_consulta.
+
+Risco/Impacto: Se o sistema aceitar isso, o relatório vai mostrar que a consulta foi realizada antes mesmo de o cliente ligar para marcar.
+
+2. Regra de Vínculo Obrigatório (Relações da Consulta)
+
+Regra de negócio: Nenhuma consulta pode existir "no limbo". Ela obrigatoriamente precisa estar amarrada a um paciente, a um médico/profissional e a uma sala da clínica.
+
+Tabela e Campo: Tabela consulta, campos de vínculo (chaves estrangeiras) com as tabelas paciente, profissional e consultorio.
+
+Risco/Impacto: Ignorar isso significa ter consultas fantasmas no sistema. A clínica pode perder dinheiro por não saber quem cobrar, gerar faturamento errado com os convênios ou ter médicos trabalhando sem registro de onde e quem atenderam.
+
+3. Regra de Registro de Tempo Real (Campos Opcionais)
+
+Regra de negócio: O médico não é obrigado a colocar o horário que o paciente entrou e saiu se a consulta não aconteceu. Mas se ele preencher o horário de início, ele é obrigado a preencher o de término (e vice-versa).
+
+Tabela e Campo: Tabela consulta, campos inicio_atendimento e fim_atendimento.
+
+Risco/Impacto: Se o sistema deixar salvar só o início, vai parecer que o paciente entrou na sala e nunca mais saiu. Isso inviabiliza o cálculo de tempo médio de atendimento da clínica e trava a análise de produtividade dos médicos.
+
+4. Regra de Sequência do Atendimento (Duração)
+
+Regra de negócio: O horário em que o paciente sai da consulta não pode ser menor (vir antes) do que o horário em que ele entrou na sala.
+
+Tabela e Campo: Tabela consulta, campos fim_atendimento e inicio_atendimento.
+
+Risco/Impacto: Ignorar essa regra faria o sistema registrar "tempo negativo" de atendimento (ex: uma consulta que durou menos 20 minutos). Isso indica falha no relógio do sistema ou no preenchimento do médico.
+
+5. Regra de Cobrança e Conclusão (Status da Consulta)
+
+Regra de negócio: A clínica só cobra o valor da consulta se ela for realmente concluída. Se o status for de falta ou cancelamento, o valor cobrado pode ficar em branco.
+
+Tabela e Campo: Tabela consulta, campos status e o campo de valor/cobrança.
+
+Risco/Impacto: Se o sistema exigir o valor mesmo para quem faltou ou cancelou, a clínica vai gerar cobranças indevidas para os pacientes ou para os convênios, causando problemas jurídicos e faturamento artificial de serviços que nunca existiram.
