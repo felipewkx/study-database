@@ -11,15 +11,8 @@ import { UserGroup } from "./UserGroup";
 import { RbacAuditLog } from "./RbacAuditLog";
 
 /**
- * Entidade = mapeamento de uma tabela do banco de dados.
- *
- * Esta classe representa a tabela "usuarios".
- * Cada propriedade decorada com @Column vira uma coluna SQL.
- *
- * Crie novas entidades em src/models/entities/ seguindo este padrão.
- * Depois registre as rotas/controllers correspondentes.
- *
- * Documentação TypeORM: https://typeorm.io
+ * Tabela: users
+ * Usuários do sistema RBAC.
  */
 @Entity("users")
 export class User {
@@ -47,18 +40,12 @@ export class User {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt!: Date;
 
-  @OneToMany(() => UserGroup, (userGroup) => userGroup.user)
-  userGroups!: UserGroup[];
-
   @OneToMany(() => UserRole, (userRole) => userRole.user)
   userRoles!: UserRole[];
 
+  @OneToMany(() => UserGroup, (userGroup) => userGroup.user)
+  userGroups!: UserGroup[];
+
   @OneToMany(() => RbacAuditLog, (log) => log.user)
   auditLogs!: RbacAuditLog[];
-
-  @OneToMany(() => RbacAuditLog, (log) => log.targetUser)
-  targetAuditLogs!: RbacAuditLog[];
-
-  @OneToMany(() => UserRole, (userRole) => userRole.grantedByUser)
-  userRolesGranted!: UserRole[];
 }

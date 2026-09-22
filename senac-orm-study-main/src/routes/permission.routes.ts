@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { UserController } from "../controllers/UserController";
+import { PermissionController } from "../controllers/PermissionController";
 
 const router = Router();
-const controller = new UserController();
+const controller = new PermissionController();
 
 router.get("/", controller.list);
 router.get("/:id", controller.findById);

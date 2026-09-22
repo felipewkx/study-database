@@ -1,24 +1,17 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
-import { GroupRole } from "./GroupRole";
 import { UserGroup } from "./UserGroup";
+import { GroupRole } from "./GroupRole";
 
 /**
- * Entidade = mapeamento de uma tabela do banco de dados.
- *
- * Esta classe representa a tabela "usuarios".
- * Cada propriedade decorada com @Column vira uma coluna SQL.
- *
- * Crie novas entidades em src/models/entities/ seguindo este padrão.
- * Depois registre as rotas/controllers correspondentes.
- *
- * Documentação TypeORM: https://typeorm.io/entities
+ * Tabela: groups
+ * Grupos / times do sistema RBAC.
  */
 @Entity("groups")
 export class Group {

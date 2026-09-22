@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { UserController } from "../controllers/UserController";
+import { RoleController } from "../controllers/RoleController";
 
 const router = Router();
-const controller = new UserController();
+const controller = new RoleController();
 
 router.get("/", controller.list);
 router.get("/:id", controller.findById);

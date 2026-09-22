@@ -11,15 +11,8 @@ import { User } from "./User";
 import { Role } from "./Role";
 
 /**
- * Entidade = mapeamento de uma tabela do banco de dados.
- *
- * Esta classe representa a tabela "usuarios".
- * Cada propriedade decorada com @Column vira uma coluna SQL.
- *
- * Crie novas entidades em src/models/entities/ seguindo este padrão.
- * Depois registre as rotas/controllers correspondentes.
- *
- * Documentação TypeORM: https://typeorm.io/entities
+ * Tabela: user_roles
+ * Relacionamento N:N entre usuários e papéis.
  */
 @Entity("user_roles")
 @Index("idx_user_roles_user_id", ["userId"])
@@ -44,10 +37,7 @@ export class UserRole {
   @JoinColumn({ name: "role_id" })
   role!: Role;
 
-  @ManyToOne(() => User, {
-    onDelete: "SET NULL",
-    nullable: true,
-  })
+  @ManyToOne(() => User, { onDelete: "SET NULL", nullable: true })
   @JoinColumn({ name: "granted_by" })
   grantedByUser!: User | null;
 }

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { UserController } from "../controllers/UserController";
+import { GroupController } from "../controllers/GroupController";
 
 const router = Router();
-const controller = new UserController();
+const controller = new GroupController();
 
 router.get("/", controller.list);
 router.get("/:id", controller.findById);

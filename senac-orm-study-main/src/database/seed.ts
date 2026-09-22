@@ -21,120 +21,25 @@ import { RbacAuditLog } from "../models/entities/RbacAuditLog";
  */
 
 const PERMISSIONS = [
-  {
-    name: "user:create",
-    resource: "user",
-    action: "create",
-    description: "Criar usuários",
-  },
-  {
-    name: "user:read",
-    resource: "user",
-    action: "read",
-    description: "Listar e visualizar usuários",
-  },
-  {
-    name: "user:update",
-    resource: "user",
-    action: "update",
-    description: "Atualizar usuários",
-  },
-  {
-    name: "user:delete",
-    resource: "user",
-    action: "delete",
-    description: "Remover usuários",
-  },
-  {
-    name: "role:create",
-    resource: "role",
-    action: "create",
-    description: "Criar papéis",
-  },
-  {
-    name: "role:read",
-    resource: "role",
-    action: "read",
-    description: "Visualizar papéis",
-  },
-  {
-    name: "role:update",
-    resource: "role",
-    action: "update",
-    description: "Atualizar papéis",
-  },
-  {
-    name: "role:delete",
-    resource: "role",
-    action: "delete",
-    description: "Remover papéis",
-  },
-  {
-    name: "permission:read",
-    resource: "permission",
-    action: "read",
-    description: "Visualizar permissões",
-  },
-  {
-    name: "permission:assign",
-    resource: "permission",
-    action: "assign",
-    description: "Atribuir permissões a papéis",
-  },
-  {
-    name: "group:create",
-    resource: "group",
-    action: "create",
-    description: "Criar grupos",
-  },
-  {
-    name: "group:read",
-    resource: "group",
-    action: "read",
-    description: "Visualizar grupos",
-  },
-  {
-    name: "group:update",
-    resource: "group",
-    action: "update",
-    description: "Atualizar grupos",
-  },
-  {
-    name: "group:delete",
-    resource: "group",
-    action: "delete",
-    description: "Remover grupos",
-  },
-  {
-    name: "article:create",
-    resource: "article",
-    action: "create",
-    description: "Criar artigos",
-  },
-  {
-    name: "article:read",
-    resource: "article",
-    action: "read",
-    description: "Ler artigos",
-  },
-  {
-    name: "article:update",
-    resource: "article",
-    action: "update",
-    description: "Editar artigos",
-  },
-  {
-    name: "article:delete",
-    resource: "article",
-    action: "delete",
-    description: "Excluir artigos",
-  },
-  {
-    name: "audit:read",
-    resource: "audit",
-    action: "read",
-    description: "Consultar logs de auditoria",
-  },
+  { name: "user:create", resource: "user", action: "create", description: "Criar usuários" },
+  { name: "user:read", resource: "user", action: "read", description: "Listar e visualizar usuários" },
+  { name: "user:update", resource: "user", action: "update", description: "Atualizar usuários" },
+  { name: "user:delete", resource: "user", action: "delete", description: "Remover usuários" },
+  { name: "role:create", resource: "role", action: "create", description: "Criar papéis" },
+  { name: "role:read", resource: "role", action: "read", description: "Visualizar papéis" },
+  { name: "role:update", resource: "role", action: "update", description: "Atualizar papéis" },
+  { name: "role:delete", resource: "role", action: "delete", description: "Remover papéis" },
+  { name: "permission:read", resource: "permission", action: "read", description: "Visualizar permissões" },
+  { name: "permission:assign", resource: "permission", action: "assign", description: "Atribuir permissões a papéis" },
+  { name: "group:create", resource: "group", action: "create", description: "Criar grupos" },
+  { name: "group:read", resource: "group", action: "read", description: "Visualizar grupos" },
+  { name: "group:update", resource: "group", action: "update", description: "Atualizar grupos" },
+  { name: "group:delete", resource: "group", action: "delete", description: "Remover grupos" },
+  { name: "article:create", resource: "article", action: "create", description: "Criar artigos" },
+  { name: "article:read", resource: "article", action: "read", description: "Ler artigos" },
+  { name: "article:update", resource: "article", action: "update", description: "Editar artigos" },
+  { name: "article:delete", resource: "article", action: "delete", description: "Excluir artigos" },
+  { name: "audit:read", resource: "audit", action: "read", description: "Consultar logs de auditoria" },
 ];
 
 const ROLES = [
@@ -269,9 +174,7 @@ async function seed() {
 
   const adminExists = await userRepo.findOneBy({ username: "admin" });
   if (adminExists) {
-    console.log(
-      "[Seed] Dados já existem (usuário admin encontrado). Nada a fazer.",
-    );
+    console.log("[Seed] Dados já existem (usuário admin encontrado). Nada a fazer.");
     console.log("[Seed] Para recriar, limpe as tabelas e execute novamente.");
     await AppDataSource.destroy();
     return;
@@ -304,7 +207,7 @@ async function seed() {
         rolePermissionRepo.create({
           roleId: saved.id,
           permissionId: permission.id,
-        }),
+        })
       );
     }
   }
@@ -330,7 +233,7 @@ async function seed() {
           userId: saved.id,
           roleId: role.id,
           grantedBy: userMap.get("admin")?.id ?? saved.id,
-        }),
+        })
       );
     }
   }
@@ -349,14 +252,14 @@ async function seed() {
       groupRepo.create({
         name: data.name,
         description: data.description,
-      }),
+      })
     );
 
     for (const roleName of data.roles) {
       const role = roleMap.get(roleName);
       if (!role) continue;
       await groupRoleRepo.save(
-        groupRoleRepo.create({ groupId: group.id, roleId: role.id }),
+        groupRoleRepo.create({ groupId: group.id, roleId: role.id })
       );
     }
 
@@ -364,7 +267,7 @@ async function seed() {
       const user = userMap.get(username);
       if (!user) continue;
       await userGroupRepo.save(
-        userGroupRepo.create({ userId: user.id, groupId: group.id }),
+        userGroupRepo.create({ userId: user.id, groupId: group.id })
       );
     }
   }

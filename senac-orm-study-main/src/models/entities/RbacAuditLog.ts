@@ -7,41 +7,34 @@ import {
   JoinColumn,
 } from "typeorm";
 import { User } from "./User";
-import { Permission } from "./Permission";
 import { Role } from "./Role";
+import { Permission } from "./Permission";
 
 /**
- * Entidade = mapeamento de uma tabela do banco de dados.
- *
- * Esta classe representa a tabela "usuarios".
- * Cada propriedade decorada com @Column vira uma coluna SQL.
- *
- * Crie novas entidades em src/models/entities/ seguindo este padrão.
- * Depois registre as rotas/controllers correspondentes.
- *
- * Documentação TypeORM: https://typeorm.io/entities
+ * Tabela: rbac_audit_logs
+ * Auditoria de alterações no sistema RBAC.
  */
 @Entity("rbac_audit_logs")
 export class RbacAuditLog {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column({ name: "user_id", type: "uuid", nullable: true })
+  @Column({ type: "uuid", name: "user_id", nullable: true })
   userId!: string | null;
 
-  @Column({ name: "action_type", type: "varchar", length: 50 })
+  @Column({ type: "varchar", name: "action_type", length: 50 })
   actionType!: string;
 
-  @Column({ name: "target_user_id", type: "uuid", nullable: true })
+  @Column({ type: "uuid", name: "target_user_id", nullable: true })
   targetUserId!: string | null;
 
-  @Column({ name: "target_role_id", type: "uuid", nullable: true })
+  @Column({ type: "uuid", name: "target_role_id", nullable: true })
   targetRoleId!: string | null;
 
-  @Column({ name: "target_permission_id", type: "uuid", nullable: true })
+  @Column({ type: "uuid", name: "target_permission_id", nullable: true })
   targetPermissionId!: string | null;
 
-  @Column({ name: "ip_address", type: "varchar", length: 45, nullable: true })
+  @Column({ type: "varchar", name: "ip_address", length: 45, nullable: true })
   ipAddress!: string | null;
 
   @CreateDateColumn({ name: "created_at" })
@@ -54,24 +47,15 @@ export class RbacAuditLog {
   @JoinColumn({ name: "user_id" })
   user!: User | null;
 
-  @ManyToOne(() => User, (user) => user.targetAuditLogs, {
-    onDelete: "SET NULL",
-    nullable: true,
-  })
+  @ManyToOne(() => User, { onDelete: "SET NULL", nullable: true })
   @JoinColumn({ name: "target_user_id" })
   targetUser!: User | null;
 
-  @ManyToOne(() => Role, {
-    onDelete: "SET NULL",
-    nullable: true,
-  })
+  @ManyToOne(() => Role, { onDelete: "SET NULL", nullable: true })
   @JoinColumn({ name: "target_role_id" })
   targetRole!: Role | null;
 
-  @ManyToOne(() => Permission, {
-    onDelete: "SET NULL",
-    nullable: true,
-  })
+  @ManyToOne(() => Permission, { onDelete: "SET NULL", nullable: true })
   @JoinColumn({ name: "target_permission_id" })
   targetPermission!: Permission | null;
 }

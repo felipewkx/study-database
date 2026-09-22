@@ -9,22 +9,16 @@ import { Group } from "./Group";
 import { Role } from "./Role";
 
 /**
- * Entidade = mapeamento de uma tabela do banco de dados.
- *
- * Esta classe representa a tabela "usuarios".
- * Cada propriedade decorada com @Column vira uma coluna SQL.
- *
- * Crie novas entidades em src/models/entities/ seguindo este padrão.
- * Depois registre as rotas/controllers correspondentes.
- *
- * Documentação TypeORM: https://typeorm.io/entities
+ * Tabela: group_roles
+ * Relacionamento N:N entre grupos e papéis.
+ * Usuários do grupo herdam estes papéis.
  */
 @Entity("group_roles")
 export class GroupRole {
-  @PrimaryColumn({ name: "group_id", type: "uuid" })
-  groupId!: string;
+  @PrimaryColumn({ type: "uuid", name: "group_id" })
+  groupId!: string; 
 
-  @PrimaryColumn({ name: "role_id", type: "uuid" })
+  @PrimaryColumn({ type: "uuid", name: "role_id" })
   roleId!: string;
 
   @CreateDateColumn({ name: "granted_at" })

@@ -6,35 +6,26 @@ import {
   JoinColumn,
   Index,
 } from "typeorm";
-import { Permission } from "./Permission";
 import { Role } from "./Role";
+import { Permission } from "./Permission";
 
 /**
- * Entidade = mapeamento de uma tabela do banco de dados.
- *
- * Esta classe representa a tabela "usuarios".
- * Cada propriedade decorada com @Column vira uma coluna SQL.
- *
- * Crie novas entidades em src/models/entities/ seguindo este padrão.
- * Depois registre as rotas/controllers correspondentes.
- *
- * Documentação TypeORM: https://typeorm.io/entities
+ * Tabela: role_permissions
+ * Relacionamento N:N entre papéis e permissões.
  */
 @Entity("role_permissions")
 @Index("idx_role_permissions_role_id", ["roleId"])
 export class RolePermission {
-  @PrimaryColumn({ name: "role_id", type: "uuid" })
+  @PrimaryColumn({ type: "uuid", name: "role_id" })
   roleId!: string;
 
-  @PrimaryColumn({ name: "permission_id", type: "uuid" })
+  @PrimaryColumn({ type: "uuid", name: "permission_id" })
   permissionId!: string;
 
   @CreateDateColumn({ name: "granted_at" })
   grantedAt!: Date;
 
-  @ManyToOne(() => Role, (role) => role.rolePermissions, {
-    onDelete: "CASCADE",
-  })
+  @ManyToOne(() => Role, (role) => role.rolePermissions, { onDelete: "CASCADE" })
   @JoinColumn({ name: "role_id" })
   role!: Role;
 
