@@ -1,0 +1,15 @@
+info:
+  name: Get User
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://localhost:3000/api/users/3fb35aaa-8f7a-406a-a61c-409be7d6fc03
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
