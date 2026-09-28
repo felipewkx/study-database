@@ -1,0 +1,16 @@
+-- Chamado #1170 — alguém criou a coluna entre aspas
+-- CREATE usou "Nome". O SELECT nome (minúsculo, sem aspas) não acha a coluna.
+-- Tarefa: o SELECT tem que achar o nome. Ou recrie a tabela sem aspas nos identificadores.
+-- Sem JOIN.
+
+DROP TABLE IF EXISTS cliente;
+
+CREATE TABLE cliente (
+  id SERIAL PRIMARY KEY,
+  "Nome" VARCHAR(80) NOT NULL
+);
+
+INSERT INTO cliente ("Nome") VALUES ('Ana Souza');
+
+SELECT nome
+FROM cliente;
