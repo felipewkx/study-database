@@ -1,0 +1,23 @@
+info:
+  name: Create User-Group
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3000/api/user-groups
+  body:
+    type: json
+    data: |-
+      {
+        "username": "marinasilva",
+        "email": "marina@email.com",
+        "passwordHash": "abc789"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

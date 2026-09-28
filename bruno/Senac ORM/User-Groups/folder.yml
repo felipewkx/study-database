@@ -1,0 +1,7 @@
+info:
+  name: User-Groups
+  type: folder
+  seq: 7
+
+request:
+  auth: inherit
