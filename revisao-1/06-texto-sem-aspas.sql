@@ -10,3 +10,10 @@ CREATE TABLE cliente (
 INSERT INTO cliente (nome) VALUES
   (Ana Souza),
   (Bruno Lima);
+
+-- Correção:
+-- O que estava errado: valores do tipo texto (strings) precisam obrigatoriamente estar entre 'aspas simples'.
+
+INSERT INTO cliente (nome) VALUES
+  ('Ana Souza'),
+  ('Bruno Lima');

@@ -19,3 +19,12 @@ INSERT INTO veiculo (placa, cliente_id) VALUES
 
 INSERT INTO cliente (nome) VALUES
   ('Ana Souza');
+
+-- Correção:
+-- O que estava errado: o veículo estava sendo inserido antes do cliente. Inverti a ordem dos INSERTs.
+
+INSERT INTO cliente (nome) VALUES
+  ('Ana Souza');
+
+INSERT INTO veiculo (placa, cliente_id) VALUES
+  ('ABC1D23', 1);

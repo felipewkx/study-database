@@ -16,3 +16,11 @@ SELECT nome
 FROM mecanico
 WHERE nome = 'Eli%'
 ORDER BY nome;
+
+-- Correção:
+-- O que estava errado: o operador = procura o texto exato "Eli%". Para busca com o %, deve-se usar LIKE.
+
+SELECT nome
+FROM mecanico
+WHERE nome LIKE 'Eli%'
+ORDER BY nome;

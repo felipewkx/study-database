@@ -42,4 +42,4 @@ Guarda os profissionais que realizam os serviços.
 
 **Por que o telefone não está na tabela `veiculo`?**
 
-> Porque o telefone é um dado da pessoa (cliente) e não do carro; se o cliente tiver mais de um veículo ou trocar de número, o telefone precisaria ser duplicado ou atualizado em várias linhas, gerando inconsistência e retrabalho.
+> Porque o telefone é um dado da pessoa (cliente) e não do carro; se o cliente tiver mais de um veículo ou trocar de número, o telefone precisaria ser duplicado ou atualizado em vários lugares, gerando inconsistência e retrabalho.

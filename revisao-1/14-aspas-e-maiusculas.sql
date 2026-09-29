@@ -14,3 +14,18 @@ INSERT INTO cliente ("Nome") VALUES ('Ana Souza');
 
 SELECT nome
 FROM cliente;
+
+-- Correção:
+-- O que estava errado: usar aspas duplas ("Nome") força o banco a diferenciar maiúsculas de minúsculas. Fiz sem aspas.
+
+DROP TABLE IF EXISTS cliente;
+
+CREATE TABLE cliente (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(80) NOT NULL
+);
+
+INSERT INTO cliente (nome) VALUES ('Ana Souza');
+
+SELECT nome
+FROM cliente;

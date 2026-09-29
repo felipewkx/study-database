@@ -15,3 +15,10 @@ INSERT INTO veiculo (placa, modelo) VALUES
 
 SELECT placa, modelo
 FROM veiculo;
+
+-- Correção:
+-- O que estava errado: faltava a cláusula ORDER BY placa ASC para ordem alfabética.
+
+SELECT placa, modelo
+FROM veiculo
+ORDER BY placa ASC;

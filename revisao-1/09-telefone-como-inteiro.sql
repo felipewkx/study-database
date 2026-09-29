@@ -16,3 +16,20 @@ INSERT INTO cliente (nome, telefone) VALUES
 
 SELECT nome, telefone
 FROM cliente;
+
+-- Correção:
+-- O que estava errado: telefone como dado numérico perde zero à esquerda. O tipo correto é VARCHAR e o valor deve estar entre 'aspas simples'.
+
+DROP TABLE IF EXISTS cliente;
+
+CREATE TABLE cliente (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(80) NOT NULL,
+  telefone VARCHAR(20)
+);
+
+INSERT INTO cliente (nome, telefone) VALUES
+  ('Ana Souza', '051980001111');
+
+SELECT nome, telefone
+FROM cliente;

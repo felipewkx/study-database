@@ -16,3 +16,10 @@ INSERT INTO mecanico (nome, telefone) VALUES
 SELECT nome, celular
 FROM mecanico
 ORDER BY nome;
+
+-- Correção:
+-- O que estava errado: a coluna se chama telefone no banco, mas a consulta chamava celular.
+
+SELECT nome, telefone
+FROM mecanico
+ORDER BY nome;

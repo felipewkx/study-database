@@ -14,3 +14,21 @@ INSERT INTO mecanico (id, nome) VALUES (1, 'Elisa Prado');
 SELECT id, nome
 FROM mecanico
 ORDER BY nome;
+
+-- Correção:
+-- O que estava errado: id é PRIMARY KEY e não pode se repetir. Usei SERIAL e deixei o próprio banco gerar os IDs automaticamente.
+
+DROP TABLE IF EXISTS mecanico;
+
+CREATE TABLE mecanico (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(80) NOT NULL
+);
+
+INSERT INTO mecanico (nome) VALUES 
+  ('Diego Alves'),
+  ('Elisa Prado');
+
+SELECT id, nome
+FROM mecanico
+ORDER BY nome;

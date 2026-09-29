@@ -16,3 +16,10 @@ INSERT INTO cliente (nome, telefone) VALUES
 
 SELECT *
 FROM cliente;
+
+-- Correção:
+-- O que estava errado: SELECT * puxa tudo, troquei por onde telefone não é nulo e ordenei pelo nome.
+SELECT nome, telefone
+FROM cliente
+WHERE telefone IS NOT NULL
+ORDER BY nome ASC;

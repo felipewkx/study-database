@@ -13,3 +13,11 @@ INSERT INTO cliente (nome, telefone) VALUES
   ('Ana Souza', '51980001111'),
   (NULL, '51980009999'),
   ('Bruno Lima', '51980002222');
+
+-- Correção: Substituí o INSERT NULL por uma string de identificação padrão (Justificativa: Salva o telefone para o suporte ligar e descobrir o nome)
+
+INSERT INTO cliente (nome, telefone) VALUES 
+('Ana Souza', '51980001111'),
+('NOME NÃO INFORMADO NA PLANILHA', '51980009999'),
+('Bruno Lima', '51980002222');
+

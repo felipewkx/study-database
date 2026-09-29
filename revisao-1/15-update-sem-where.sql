@@ -22,3 +22,14 @@ SET telefone = '51989990000';
 SELECT id, nome, telefone
 FROM cliente
 ORDER BY id;
+
+-- Correção:
+-- O que estava errado: o UPDATE não possuía filtro WHERE, o que alteraria o telefone de todos os clientes da tabela.
+
+UPDATE cliente
+SET telefone = '51989990000'
+WHERE nome = 'Ana Souza';
+
+SELECT id, nome, telefone
+FROM cliente
+ORDER BY id;

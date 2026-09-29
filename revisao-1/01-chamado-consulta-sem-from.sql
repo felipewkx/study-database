@@ -16,3 +16,10 @@ INSERT INTO cliente (nome, telefone) VALUES
 SELECT nome, telefone
 cliente
 ORDER BY nome;
+
+-- Correção:
+-- O que estava errado: faltou a palavra-chave FROM antes do nome da tabela (cliente).
+
+SELECT nome, telefone
+FROM cliente
+ORDER BY nome;
