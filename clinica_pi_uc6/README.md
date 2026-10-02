@@ -22,9 +22,9 @@ Este módulo foi desenvolvido para transformar os dados brutos armazenados no ba
 | Relatório              | Pergunta de negócio                                                                     | Situação  |
 | :--------------------- | :-------------------------------------------------------------------------------------- | :-------- |
 | 1. Demanda             | Quais especialidades e profissionais possuem maior volume de consultas realizadas?      | Concluído |
-| 2. Faltas              | Onde estão concentradas as faltas e qual é a taxa de ausência?                          | Pendente  |
-| 3. Atendimentos        | Qual especialidade, profissional ou convênio gera maior faturamento e volume realizado? | Pendente  |
-| 4. Uso de consultórios | Quais consultórios são mais utilizados e em quais horários?                             | Pendente  |
+| 2. Faltas              | Onde estão concentradas as faltas e qual é a taxa de ausência?                          | Concluído |
+| 3. Atendimentos        | Qual especialidade, profissional ou convênio gera maior faturamento e volume realizado? | Concluído |
+| 4. Uso de consultórios | Quais consultórios são mais utilizados e em quais horários?                             | Concluído |
 
 ## Como executar os relatórios SQL
 
