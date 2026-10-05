@@ -8,6 +8,8 @@ A oficina te entregou este caderno e pediu “vira banco”:
 | Ana Souza  | 51988881111 | EFG4H56 | Onix   | Diego    |
 | Bruno Lima | 51980002222 | IJK7L89 | Civic  | Elisa    |
 
+A Ana não tem dois telefones. O número mudou, e o caderno guardou as duas versões: `51980001111` na linha do Gol e `51988881111` na linha do Onix. As duas não valem ao mesmo tempo.
+
 ## Tarefa
 
 Não crie uma tabela com essas cinco colunas.
@@ -19,42 +21,45 @@ Não crie uma tabela com essas cinco colunas.
 
 Sem `JOIN` no SQL de hoje. `cliente_id` no veículo pode existir sem `FOREIGN KEY`.
 
--- Correção:
+---
+
+## Correção:
 
 ### 1. Fatos que se repetem sem necessidade:
 
-- O nome da cliente "Ana Souza" aparece em duas linhas.
-- O telefone da Ana aparece com números diferentes.
-- O nome do mecânico "Diego" fica duplicado como texto solto em vez de ser um cadastro próprio.
+- O nome da cliente "Ana Souza" aparece duplicado em duas linhas diferentes.
+- O nome do mecânico "Diego" fica repetido como texto solto em vez de ter seu próprio cadastro.
+- O telefone antigo da Ana (`51980001111`) continua registrado na linha do Gol mesmo estando desatualizado e não sendo mais válido.
 
 ### 2. Tabelas e Relacionamento (1:N):
 
-- `cliente` (id PK, nome, telefone)
-- `veiculo` (id PK, placa, modelo, cliente*id) -> \_1 Cliente tem N Veículos*
+- `cliente` (id PK, nome, telefone) -> Guardará apenas o telefone atual e válido da Ana.
+- `veiculo` (id PK, placa, modelo, cliente*id) -> 1 Cliente tem N Veículos.*
 - `mecanico` (id PK, nome)
 
 ### 3. Scripts CREATE TABLE:
 
 ```sql
 CREATE TABLE cliente (
-  id SERIAL PRIMARY KEY,
-  nome VARCHAR(80) NOT NULL,
-  telefone VARCHAR(20) NOT NULL
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(80) NOT NULL,
+    telefone VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE veiculo (
-  id SERIAL PRIMARY KEY,
-  placa VARCHAR(8) NOT NULL,
-  modelo VARCHAR(40) NOT NULL,
-  cliente_id INTEGER NOT NULL
+    id SERIAL PRIMARY KEY,
+    placa VARCHAR(8) NOT NULL,
+    modelo VARCHAR(40) NOT NULL,
+    cliente_id INTEGER NOT NULL
 );
 
 CREATE TABLE mecanico (
-  id SERIAL PRIMARY KEY,
-  nome VARCHAR(80) NOT NULL
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(80) NOT NULL
 );
 ```
 
-### 4. Telefone duplicado:
+### 4. O que aconteceria com o telefone da Ana se tudo ficasse numa tabela só?
 
-- Os dois telefones ficariam espalhados em linhas diferentes, fazendo o sistema achar que o Gol e o Onix pertencem a duas "Anas" distintas em vez de uma cliente com dois números.
+- **O Problema:** O telefone antigo da Ana continuaria ativo na linha do Gol mesmo estando desatualizado, fazendo o sistema exibir uma informação velha como se fosse válida hoje e gerando confusão na hora de ligar para a cliente.
+- **A Solução:** Separamos o Cliente do Veículo. Agora o telefone fica salvo em um único lugar na tabela `cliente`. Quando ela muda de número, atualizamos apenas uma vez e todos os carros dela (Gol e Onix) passam a mostrar o telefone novo e correto instantaneamente.
